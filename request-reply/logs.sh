@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose logs -f -t
+docker-compose logs -f -t --tail="all"
