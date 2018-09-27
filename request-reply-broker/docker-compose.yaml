@@ -1,0 +1,22 @@
+version: '3'
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: server.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  client:
+    build:
+      context: ./client
+      dockerfile: client.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: proxy.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
