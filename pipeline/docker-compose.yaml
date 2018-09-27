@@ -1,0 +1,39 @@
+version: '3'
+services:
+  ventilator:
+    build:
+      context: ./ventilator
+      dockerfile: ventilator.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  worker1:
+    build:
+      context: ./worker
+      dockerfile: worker.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - WORKER_ID=1
+
+  worker2:
+    build:
+      context: ./worker
+      dockerfile: worker.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - WORKER_ID=2
+
+  worker3:
+    build:
+      context: ./worker
+      dockerfile: worker.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - WORKER_ID=3
+
+  sink:
+    build:
+      context: ./sink
+      dockerfile: sink.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1

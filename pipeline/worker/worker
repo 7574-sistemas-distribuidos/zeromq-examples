@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+import sys
+import time
+import zmq
+import os
+
+context = zmq.Context()
+
+# Socket to receive messages on
+receiver = context.socket(zmq.PULL)
+receiver.connect("tcp://ventilator:5557")
+
+# Socket to send messages to
+sender = context.socket(zmq.PUSH)
+sender.connect("tcp://sink:5558")
+
+workerid = os.environ["WORKER_ID"]
+
+# Process tasks forever
+counter = 0
+while True:
+    s = receiver.recv()
+    counter += 1
+
+    # Simple progress indicator for the viewer
+    print("[WORKER {}] Message counter: {}".format(workerid, counter))
+
+    # Do the work
+    time.sleep(int(s)*0.001)
+
+    # Send results to sink
+    sender.send(b'')
