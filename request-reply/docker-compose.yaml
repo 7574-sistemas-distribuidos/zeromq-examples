@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: server.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
 
   # client:
   #   build:
