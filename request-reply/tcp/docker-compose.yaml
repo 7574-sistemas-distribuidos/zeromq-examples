@@ -2,7 +2,7 @@ version: '3'
 services:
   server:
     build:
-      context: .
+      context: ./server
       dockerfile: server.dockerfile
     environment:
       - PYTHONUNBUFFERED=1
