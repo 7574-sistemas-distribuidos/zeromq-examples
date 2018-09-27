@@ -20,10 +20,10 @@ while True:
 
     if socks.get(frontend) == zmq.POLLIN:
         message = frontend.recv_multipart()
-        print("[PROXY] Message received from frontend socket: {}".format(message))
+        # print("[PROXY] Message received from frontend socket: {}".format(message))
         backend.send_multipart(message)
 
     if socks.get(backend) == zmq.POLLIN:
         message = backend.recv_multipart()
-        print("[PROXY] Message received from backend socket: {}".format(message))
+        # print("[PROXY] Message received from backend socket: {}".format(message))
         frontend.send_multipart(message)

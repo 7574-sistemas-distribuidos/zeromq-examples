@@ -1,18 +1,52 @@
 version: '3'
 services:
-  server:
+  server1:
     build:
       context: ./server
       dockerfile: server.dockerfile
     environment:
       - PYTHONUNBUFFERED=1
+      - SERVER_ID=1
 
-  client:
+  server2:
+    build:
+      context: ./server
+      dockerfile: server.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - SERVER_ID=2
+
+  server3:
+    build:
+      context: ./server
+      dockerfile: server.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - SERVER_ID=3
+
+  client1:
     build:
       context: ./client
       dockerfile: client.dockerfile
     environment:
       - PYTHONUNBUFFERED=1
+      - CLIENT_ID=1
+
+  client2:
+    build:
+      context: ./client
+      dockerfile: client.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CLIENT_ID=2
+
+  client3:
+    build:
+      context: ./client
+      dockerfile: client.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CLIENT_ID=3
 
   proxy:
     build:

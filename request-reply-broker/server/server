@@ -1,11 +1,17 @@
 #!/usr/bin/python3
 import zmq
+import os
+import time
+
+from random import randrange
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.connect("tcp://proxy:5560")
+server_id = os.environ["SERVER_ID"]
 
 while True:
     message = socket.recv()
-    print("Received request: %s" % message)
-    socket.send(b"World")
+    print("[SERVER {}] Received request: {}".format(server_id, message))
+    time.sleep(randrange(1,4))
+    socket.send("World {}".format(server_id).encode('ascii'))
