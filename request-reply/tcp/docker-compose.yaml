@@ -6,8 +6,3 @@ services:
       dockerfile: server.dockerfile
     environment:
       - PYTHONUNBUFFERED=1
-
-  # client:
-  #   build:
-  #     context: .
-  #     dockerfile: client.dockerfile
