@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+import sys
+import zmq
+import os
+
+#  Socket to talk to server
+context = zmq.Context()
+socket = context.socket(zmq.SUB)
+
+print("Collecting updates from weather server...")
+socket.connect("tcp://pub:5556")
+
+zip_filter = os.environ["ZIP_FILTER"]
+
+# Python 2 - ascii bytes to unicode str
+if isinstance(zip_filter, bytes):
+    zip_filter = zip_filter.decode('ascii')
+
+socket.setsockopt_string(zmq.SUBSCRIBE, zip_filter)
+
+# Process 5 updates
+total_temp = 0
+for update_nbr in range(5):
+    string = socket.recv_string()
+    print("[ZIP_FILTER {}] Message received!!".format(zip_filter))
+
+    zipcode, temperature, relhumidity = string.split()
+    total_temp += int(temperature)
+
+print("Average temperature for zipcode '%s' was %dF" % (
+      zip_filter, total_temp / (update_nbr+1))
+)

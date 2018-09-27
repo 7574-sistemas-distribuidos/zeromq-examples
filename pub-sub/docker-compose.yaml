@@ -1,0 +1,32 @@
+version: '3'
+services:
+  pub:
+    build:
+      context: ./pub
+      dockerfile: pub.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  sub1:
+    build:
+      context: ./sub
+      dockerfile: sub.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ZIP_FILTER=1
+
+  sub2:
+    build:
+      context: ./sub
+      dockerfile: sub.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ZIP_FILTER=2
+
+  sub3:
+    build:
+      context: ./sub
+      dockerfile: sub.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ZIP_FILTER=3
