@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+import zmq
+import random
+import sys
+import time
+
+port = "5556"
+context = zmq.Context()
+socket = context.socket(zmq.PAIR)
+socket.connect("tcp://server:%s" % port)
+
+print("Starting Client with ZMQ.PAIR socket")
+for i in range(10):
+    socket.send(str.encode("client message to server: {}".format(i)))
+    time.sleep(1)
+
+print("Stopping Client with ZMQ.PAIR socket")
+socket.send(b"END")

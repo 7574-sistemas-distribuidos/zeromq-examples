@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+import zmq
+import random
+import sys
+import time
+
+port = "5556"
+context = zmq.Context()
+socket = context.socket(zmq.PAIR)
+socket.bind("tcp://*:%s" % port)
+
+end = False
+while end != True:
+    msg = socket.recv() 
+    print(msg)
+
+    # Streams in ZMQ are received as bytes. 
+    # Cast the msg to string and decode it to be able to do the comparison
+    if msg.decode() == "END":
+        end = True
+
+    time.sleep(1)
