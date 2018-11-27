@@ -1,0 +1,26 @@
+version: '3'
+services:
+  pub:
+    build:
+      context: ./pub
+      dockerfile: pub.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - proxy
+
+  sub:
+    build:
+      context: ./sub
+      dockerfile: sub.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - proxy
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: proxy.dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1

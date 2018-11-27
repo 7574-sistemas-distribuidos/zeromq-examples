@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+import zmq
+import time
+from random import randrange
+
+xpub_url = "tcp://proxy:6000"
+xsub_url = "tcp://proxy:6001"
+
+ctx = zmq.Context()
+pub = ctx.socket(zmq.PUB)
+pub.connect(xsub_url)
+# pub.bind(xpub_url)
+
+for n in range(10):
+    for topic in "ABC":
+        print("[PUB] Sending message. Topic: {} - Message: {}".format(topic, n))
+        pub.send_multipart([bytes(topic,'utf-8'),bytes([n])])
+    time.sleep(0.25)

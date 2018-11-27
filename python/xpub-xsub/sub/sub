@@ -1,0 +1,23 @@
+#!/usr/bin/python3
+import sys
+import zmq
+import os
+
+xpub_url = "tcp://proxy:6000"
+xsub_url = "tcp://proxy:6001"
+
+ctx = zmq.Context()
+sub = ctx.socket(zmq.SUB)
+sub.connect(xpub_url)
+topics = 'ABC'
+
+for topic in "ABC":
+    sub.setsockopt_string(zmq.SUBSCRIBE, topic)
+
+# Waiting for messages
+# time.sleep(0.3)
+while True:
+    if sub.poll(timeout=1000):
+        print("[SUB] Received", sub.recv_multipart())
+    else:
+        print("[SUB] Timeout while polling")

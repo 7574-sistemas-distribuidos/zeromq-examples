@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+import sys
+import zmq
+import os
+
+xpub_url = "tcp://*:6000"
+xsub_url = "tcp://*:6001"
+
+ctx = zmq.Context()
+xpub = ctx.socket(zmq.XPUB)
+# xpub.setsockopt(zmq.XPUB_VERBOSE, 1)
+xpub.bind(xpub_url)
+xsub = ctx.socket(zmq.XSUB)
+xsub.bind(xsub_url)
+
+poller = zmq.Poller()
+poller.register(xpub, zmq.POLLIN)
+poller.register(xsub, zmq.POLLIN)
+while True:
+    events = dict(poller.poll(1000))
+    if xpub in events:
+        message = xpub.recv_multipart()
+        print("[XPUB] Message arrived: %r" % message[0])
+        xsub.send_multipart(message)
+    if xsub in events:
+        message = xsub.recv_multipart()
+        print("[XSUB] Message arrived: %r" % message[0])
+        xpub.send_multipart(message)
