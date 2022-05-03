@@ -1,3 +1,3 @@
 #!/bin/bash
-docker-compose stop
+docker-compose stop -t 1
 docker-compose down
