@@ -13,7 +13,7 @@ services:
       dockerfile: sub.dockerfile
     environment:
       - PYTHONUNBUFFERED=1
-      - ZIP_FILTER=1
+      - ZIP_FILTER=
 
   sub2:
     build:
